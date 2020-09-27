@@ -8,4 +8,7 @@ public class ParsedIntent {
 
     @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "<path to build package to>")
     String build;
+
+    @CommandLine.Option(names = {"-p", "--publish"}, paramLabel = "<path to packaged zip>")
+    String publish;
 }
