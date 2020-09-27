@@ -13,6 +13,7 @@ import java.util.zip.ZipInputStream;
 import com.hemant.jlambda.model.LambdaConfig;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.progress.ProgressMonitor;
 import org.apache.commons.io.FileUtils;
 
 public class Generate implements Event {
@@ -31,6 +32,8 @@ public class Generate implements Event {
             File tempFile = File.createTempFile("temp", "zip");
             FileUtils.copyInputStreamToFile(inputStream, tempFile);
             ZipFile zipFile = new ZipFile(tempFile);
+            ProgressMonitor progressMonitor = zipFile.getProgressMonitor();
+            zipFile.setRunInThread(true);
             zipFile.extractAll(path);
             tempFile.deleteOnExit();
         } catch (ZipException | IOException e) {

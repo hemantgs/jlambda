@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import com.hemant.jlambda.events.Build;
 import com.hemant.jlambda.events.Event;
 import com.hemant.jlambda.events.Generate;
+import com.hemant.jlambda.events.Publish;
 import com.hemant.jlambda.model.LambdaConfig;
 
 public class EventsRunner {
@@ -19,6 +20,8 @@ public class EventsRunner {
         onGenerate().ifPresent(event -> event.execute(config));
 
         onBuild().ifPresent(event -> event.execute(config));
+
+        onPublish().ifPresent(event -> event.execute(config));
     }
 
     private Optional<Event> onGenerate() {
@@ -30,7 +33,14 @@ public class EventsRunner {
 
     private Optional<Event> onBuild() {
         if (Objects.nonNull(parsedIntent.build)) {
-            return Optional.of(new Build());
+            return Optional.of(new Build(parsedIntent.build));
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Event> onPublish() {
+        if (Objects.nonNull(parsedIntent.publish)) {
+            return Optional.of(new Publish(parsedIntent.publish));
         }
         return Optional.empty();
     }
