@@ -7,13 +7,11 @@ import com.hemant.jlambda.events.Event;
 import com.hemant.jlambda.events.Generate;
 import com.hemant.jlambda.model.LambdaConfig;
 import com.hemant.jlambda.runner.EventsRunner;
-import com.hemant.jlambda.runner.EventsRunner.ExecuteEvents;
+import com.hemant.jlambda.runner.ParsedIntent;
 import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
-
-import static com.hemant.jlambda.runner.EventsRunner.ExecuteEvents.GENERATE;
 
 @Command(name = "jlambda")
 public class App implements Runnable {
@@ -21,10 +19,8 @@ public class App implements Runnable {
     @Option(names = {"-h", "--help"}, usageHelp = true)
     private boolean help;
 
-    @Option(names = {"-i", "--intent"}, paramLabel = "event")
-    private ExecuteEvents intent;
-
-    private Event generateEvent = new Generate();
+    @ArgGroup(exclusive = true, multiplicity = "1")
+    private ParsedIntent intent;
 
     public static void main(String[] args) {
         new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
@@ -32,9 +28,10 @@ public class App implements Runnable {
 
     @Override
     public void run() {
-        switch (intent) {
-            case GENERATE:
-                EventsRunner.run(() -> generateEvent.execute(new LambdaConfig("test")));
-        }
+
+        EventsRunner.build()
+                    .config(new LambdaConfig("test"))
+                    .withIntent(intent)
+                    .run();
     }
 }
