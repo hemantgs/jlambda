@@ -58,7 +58,7 @@ public class Publish implements Event {
                                          .code(code -> code.zipFile(bytes).build())
                                          .handler(String.format("com.lambda.basic.Handler"))
                                          .runtime(Runtime.JAVA11)
-                                         .role("arn:aws:iam::498341694494:role/lambda-basic-execution").build();
+                                         .role(lambdaConfig.getExecutionRole()).build();
             CreateFunctionResponse createFunctionResponse = lambdaClient.createFunction(createFunctionRequest);
         } catch (IOException e) {
             e.printStackTrace();
