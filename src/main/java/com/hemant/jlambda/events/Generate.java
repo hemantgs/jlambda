@@ -25,7 +25,7 @@ public class Generate implements Event {
     }
 
     @Override
-    public void execute(LambdaConfig config) {
+    public void execute() {
         ClassLoader classLoader = getClass().getClassLoader();
         try {
             InputStream inputStream = classLoader.getResourceAsStream("bundles/basic-lambda.zip");
