@@ -10,17 +10,21 @@ import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.gradle.tooling.model.GradleProject;
 import org.gradle.tooling.model.GradleTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Build implements Event {
     GradleConnector gradleConnector;
+    Logger logger = LoggerFactory.getLogger(Build.class);
 
     public Build(String path) {
         gradleConnector = GradleConnector.newConnector();
-        gradleConnector.forProjectDirectory(new File(path));
+        gradleConnector.forProjectDirectory(new File(String.format("%s/basic-lambda/", path)));
     }
 
     @Override
-    public void execute(LambdaConfig config) {
+    public void execute() {
+        logger.info("Building deployment package");
         ProjectConnection connection = gradleConnector.connect();
         BuildLauncher launcher = connection.newBuild();
         GradleProject project = connection.getModel(GradleProject.class);

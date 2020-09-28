@@ -36,7 +36,6 @@ public class App implements Runnable {
     public void run() {
 
         EventsRunner.build()
-                    .config(PropertyLoader.loadProperties(profile))
                     .withIntent(intent)
                     .run();
     }

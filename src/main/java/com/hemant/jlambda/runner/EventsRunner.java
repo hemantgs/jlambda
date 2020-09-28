@@ -17,11 +17,19 @@ public class EventsRunner {
     public ParsedIntent parsedIntent;
 
     public void run() {
-        onGenerate().ifPresent(event -> event.execute(config));
+        Consumer<Event> executeEvent = event -> event.execute();
 
-        onBuild().ifPresent(event -> event.execute(config));
+        //Generate java lambda project
+        onGenerate().ifPresent(executeEvent);
 
-        onPublish().ifPresent(event -> event.execute(config));
+        //Build deployment package alone
+        onBuild().ifPresent(executeEvent);
+
+        //Build and publish
+        onPublish().ifPresent(event -> {
+            onBuild().ifPresentOrElse(executeEvent, () -> new IllegalAccessException("Cannot Build Packages"));
+            executeEvent.accept(event);
+        });
     }
 
     private Optional<Event> onGenerate() {
@@ -35,11 +43,15 @@ public class EventsRunner {
         if (Objects.nonNull(parsedIntent.build)) {
             return Optional.of(new Build(parsedIntent.build));
         }
+        if (Objects.nonNull(parsedIntent.publish)) {
+            return Optional.of(new Build(parsedIntent.publish));
+        }
         return Optional.empty();
     }
 
     private Optional<Event> onPublish() {
         if (Objects.nonNull(parsedIntent.publish)) {
+            Publish.setLambdaConfig(PropertyLoader.loadProperties(parsedIntent.publish));
             return Optional.of(new Publish(parsedIntent.publish));
         }
         return Optional.empty();
