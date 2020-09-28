@@ -18,6 +18,7 @@ package com.hemant.jlambda.model;
 
 public class LambdaConfig {
     private String name;
+    private String executionRole;
 
     public LambdaConfig(String name) {
         this.name = name;
@@ -32,5 +33,13 @@ public class LambdaConfig {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExecutionRole() {
+        return executionRole;
+    }
+
+    public void setExecutionRole(String executionRole) {
+        this.executionRole = executionRole;
     }
 }

@@ -38,6 +38,7 @@ public class PropertyLoader {
             config.load(inputStream);
             LambdaConfig lambdaConfig = new LambdaConfig();
             lambdaConfig.setName((String) config.getOrDefault("jlambda.name", "default_jlamda"));
+            lambdaConfig.setExecutionRole(config.getProperty("jlambda.role", ""));
             return lambdaConfig;
         } catch (IOException e) {
             e.printStackTrace();
