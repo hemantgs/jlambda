@@ -36,11 +36,6 @@ public class App implements Runnable {
     @ArgGroup(exclusive = true, multiplicity = "1")
     private ParsedIntent intent;
 
-    @Option(names = {"-e", "--env"}, description = "The name of the profile based on which properties are loaded\n" +
-            "For e.g. 1) default.properties -->When profile not set\n" +
-            "2) dev.properties", defaultValue = "default")
-    private String profile;
-
     public static void main(String[] args) {
         new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
     }

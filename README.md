@@ -21,10 +21,6 @@ Usage: jlambda [-h] [-e=<profile>] (-g=<path to generate lambda> | -b=<path to
                build package to> | -p=<path to packaged zip>)
   -b, --build=<path to build package to>
 
-  -e, --env=<profile>   The name of the profile based on which properties are
-                          loaded
-                        For e.g. 1) default.properties -->When profile not set
-                        2) dev.properties
   -g, --generate=<path to generate lambda>
 
   -h, --help
