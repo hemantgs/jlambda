@@ -12,6 +12,7 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+
 }
 
 repositories {
@@ -26,8 +27,8 @@ dependencies {
     implementation 'info.picocli:picocli:4.5.1'
     implementation 'commons-io:commons-io:2.4'
     implementation "org.gradle:gradle-tooling-api:6.6"
-    implementation "ch.qos.logback:logback-core:1.2.3"
-    implementation "ch.qos.logback:logback-classic:1.2.3"
+//    implementation "ch.qos.logback:logback-core:1.2.3"
+//    implementation "ch.qos.logback:logback-classic:1.2.3"
     implementation platform("software.amazon.awssdk:bom:2.10.86")
 
     implementation "software.amazon.awssdk:lambda"
