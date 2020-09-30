@@ -33,6 +33,6 @@ that will eventually be the handler parameter in AWS Lambda.
 `./jlambda -p /your/project/path` will build the deployment package and publish to AWS
 
 ### Download
-You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.2-alpha/jlambda)
+You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.3-alpha/jlambda)
 
 P.S. Right now this is tested only in linux
