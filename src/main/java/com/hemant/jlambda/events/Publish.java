@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.hemant.jlambda.model.LambdaConfig;
+import com.hemant.jlambda.runner.AWSCredentialsHandler;
 import org.apache.commons.io.FileUtils;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
@@ -32,6 +33,7 @@ public class Publish implements Event {
 
     private String pathToZip;
     private static LambdaConfig lambdaConfig;
+    private static LambdaClient client;
 
 //    Logger logger = LoggerFactory.getLogger(Publish.class);
 
@@ -41,22 +43,24 @@ public class Publish implements Event {
 
     public static void setLambdaConfig(LambdaConfig lambdaConfig) {
         Publish.lambdaConfig = lambdaConfig;
+        client = AWSCredentialsHandler.getClient(lambdaConfig).orElseThrow(() -> new IllegalArgumentException("Cannot get Creds"));
     }
 
     @Override
     public void execute() {
 //        logger.info("Publishing Lambda now");
-        LambdaClient lambdaClient = LambdaClient.builder().region(Region.US_WEST_2).build();
+//        LambdaClient lambdaClient = LambdaClient.builder().region(Region.US_WEST_2).build();
         try {
             SdkBytes bytes = SdkBytes.fromByteArray(FileUtils.readFileToByteArray(new File(pathToZip)));
             CreateFunctionRequest createFunctionRequest =
                     CreateFunctionRequest.builder()
                                          .functionName(lambdaConfig.getName())
                                          .code(code -> code.zipFile(bytes).build())
-                                         .handler(String.format("com.lambda.basic.Handler"))
+                                         .handler(lambdaConfig.getHandler())
+                                         .memorySize(Integer.valueOf(lambdaConfig.getMemory()))
                                          .runtime(Runtime.JAVA11)
                                          .role(lambdaConfig.getExecutionRole()).build();
-            CreateFunctionResponse createFunctionResponse = lambdaClient.createFunction(createFunctionRequest);
+            CreateFunctionResponse createFunctionResponse = client.createFunction(createFunctionRequest);
         } catch (IOException e) {
             e.printStackTrace();
         }

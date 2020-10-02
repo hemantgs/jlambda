@@ -44,7 +44,7 @@ public class Build implements Event {
         try {
             launcher.forTasks(":buildZip").run();
         } catch (Throwable e) {
-            System.out.println(e.getCause());
+            e.printStackTrace();
         } finally {
             connection.close();
         }

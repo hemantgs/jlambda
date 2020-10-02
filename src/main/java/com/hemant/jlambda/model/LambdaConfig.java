@@ -19,6 +19,60 @@ package com.hemant.jlambda.model;
 public class LambdaConfig {
     private String name;
     private String executionRole;
+    private String awsAccessKey;
+    private String awsAccessSecret;
+    private String profile;
+    private String handler;
+    private String region;
+    private String memory;
+
+    public String getMemory() {
+        return memory;
+    }
+
+    public void setMemory(String memory) {
+        this.memory = memory;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getHandler() {
+        return handler;
+    }
+
+    public void setHandler(String handler) {
+        this.handler = handler;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public String getAwsAccessKey() {
+        return awsAccessKey;
+    }
+
+    public void setAwsAccessKey(String awsAccessKey) {
+        this.awsAccessKey = awsAccessKey;
+    }
+
+    public String getAwsAccessSecret() {
+        return awsAccessSecret;
+    }
+
+    public void setAwsAccessSecret(String awsAccessSecret) {
+        this.awsAccessSecret = awsAccessSecret;
+    }
 
     public LambdaConfig(String name) {
         this.name = name;

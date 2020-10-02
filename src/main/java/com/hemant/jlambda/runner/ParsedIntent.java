@@ -20,11 +20,16 @@ import picocli.CommandLine;
 
 public class ParsedIntent {
     @CommandLine.Option(names = {"-g", "--generate"}, paramLabel = "<path to generate lambda>")
-    String generate;
+    static String generate;
 
     @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "<path to build package to>")
-    String build;
+    static String build;
 
-    @CommandLine.Option(names = {"-p", "--publish"}, paramLabel = "<path to packaged zip>")
-    String publish;
+    @CommandLine.ArgGroup(exclusive = false)
+    PublishEvent publishEvent;
+
+    static class PublishEvent {
+        @CommandLine.Option(names = {"-p", "--publish"}, required = true) static String publish;
+        @CommandLine.Option(names = {"-e", "--env"}, required = false, defaultValue = "default") static String env;
+    }
 }

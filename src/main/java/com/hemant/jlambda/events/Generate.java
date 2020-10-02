@@ -48,8 +48,6 @@ public class Generate implements Event {
             File tempFile = File.createTempFile("temp", "zip");
             FileUtils.copyInputStreamToFile(inputStream, tempFile);
             ZipFile zipFile = new ZipFile(tempFile);
-            ProgressMonitor progressMonitor = zipFile.getProgressMonitor();
-            zipFile.setRunInThread(true);
             zipFile.extractAll(path);
             tempFile.deleteOnExit();
         } catch (ZipException | IOException e) {

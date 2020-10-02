@@ -37,13 +37,15 @@ public class App implements Runnable {
     private ParsedIntent intent;
 
     public static void main(String[] args) {
-        new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
+        int exitCode =  new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
+        System.exit(exitCode);
     }
 
     @Override
     public void run() {
 
         EventsRunner.build()
+                    .withEnv("")
                     .withIntent(intent)
                     .run();
     }

@@ -17,20 +17,25 @@ Jlambda is written in java for Java developers.
 
 ### How To
 ```
-Usage: jlambda [-h] [-e=<profile>] (-g=<path to generate lambda> | -b=<path to 
-               build package to> | -p=<path to packaged zip>)
+Usage: jlambda [-h] (-g=<path to generate lambda> | -b=<path to build package 
+               to> | [-p=<publish> [-e=<env>]])
   -b, --build=<path to build package to>
 
+  -e, --env=<env>
   -g, --generate=<path to generate lambda>
 
   -h, --help
-  -p, --publish=<path to packaged zip>
+  -p, --publish=<publish>
 
 ```
-`./jlambda -g /your/destination/path` will generate a simple java project with a Handler.java class
-that will eventually be the handler parameter in AWS Lambda.
+Jlambda provides three commands
+* `./jlambda -g /your/path` This will generate a simple gradle java project with AWS Lambda dependencies pre-added. All you have to do is import the project .The Main class(AWS Lambda Handler) is by default at `com.lambda.basic.Handler`.It also has a ``default.properties`` file that has all necessary lambda configuration.
+    * You can create your own `<env>.properties` to hold account specific configuration
+All that is left is to add logic to your function
+* `./jlambda -b /your/path` This will build the java project at the specified location into a deployment package(.zip).
+* `./jlambda -p /your/path` will build and publish the deployment package to AWS using the config given in `default.properties` . Furthermore , you con use `./jlambda -p /your/path -e <env>` to deploy using environment specific configuration.
 
-`./jlambda -p /your/project/path` will build the deployment package and publish to AWS
+
 
 ### Download
 You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.3-alpha/jlambda)

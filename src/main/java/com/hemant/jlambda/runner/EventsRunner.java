@@ -31,6 +31,7 @@ public class EventsRunner {
 
     public LambdaConfig config;
     public ParsedIntent parsedIntent;
+    public String env;
 
     public void run() {
         Consumer<Event> executeEvent = event -> event.execute();
@@ -49,26 +50,27 @@ public class EventsRunner {
     }
 
     private Optional<Event> onGenerate() {
-        if (Objects.nonNull(parsedIntent.generate)) {
-            return Optional.of(new Generate(parsedIntent.generate));
+        if (Objects.nonNull(ParsedIntent.generate)) {
+            return Optional.of(new Generate(ParsedIntent.generate));
         }
         return Optional.empty();
     }
 
     private Optional<Event> onBuild() {
-        if (Objects.nonNull(parsedIntent.build)) {
-            return Optional.of(new Build(parsedIntent.build));
+        if (Objects.nonNull(ParsedIntent.build)) {
+            return Optional.of(new Build(ParsedIntent.build));
         }
-        if (Objects.nonNull(parsedIntent.publish)) {
-            return Optional.of(new Build(parsedIntent.publish));
+        if (Objects.nonNull(ParsedIntent.PublishEvent.publish)) {
+            return Optional.of(new Build(ParsedIntent.PublishEvent.publish));
         }
         return Optional.empty();
     }
 
     private Optional<Event> onPublish() {
-        if (Objects.nonNull(parsedIntent.publish)) {
-            Publish.setLambdaConfig(PropertyLoader.loadProperties(parsedIntent.publish));
-            return Optional.of(new Publish(parsedIntent.publish));
+        if (Objects.nonNull(ParsedIntent.PublishEvent.publish)) {
+            Publish.setLambdaConfig(PropertyLoader.loadProperties(ParsedIntent.PublishEvent.publish,
+                    ParsedIntent.PublishEvent.env));
+            return Optional.of(new Publish(ParsedIntent.PublishEvent.publish));
         }
         return Optional.empty();
     }
@@ -85,5 +87,10 @@ public class EventsRunner {
 
     public static EventsRunner build() {
         return new EventsRunner();
+    }
+
+    public EventsRunner withEnv(String env) {
+        this.env = env;
+        return this;
     }
 }

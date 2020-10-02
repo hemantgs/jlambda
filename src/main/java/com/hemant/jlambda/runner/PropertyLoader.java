@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import com.hemant.jlambda.model.LambdaConfig;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.gradle.tooling.BuildLauncher;
 import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
@@ -31,18 +33,32 @@ import org.gradle.tooling.model.GradleProject;
 
 public class PropertyLoader {
 
-    public static LambdaConfig loadProperties(String path) {
+    public static LambdaConfig loadProperties(String path, String env) {
         try {
-            InputStream inputStream = new FileInputStream(String.format("%s/basic-lambda/default.properties", path));
+            InputStream inputStream = getFileStream(path, env);
             Properties config = new Properties();
             config.load(inputStream);
             LambdaConfig lambdaConfig = new LambdaConfig();
-            lambdaConfig.setName((String) config.getOrDefault("jlambda.name", "default_jlamda"));
-            lambdaConfig.setExecutionRole(config.getProperty("jlambda.role", ""));
+            lambdaConfig.setName(config.getProperty("jlambda.aws.name", "default_jlamda"));
+            lambdaConfig.setExecutionRole(config.getProperty("jlambda.aws.role"));
+            lambdaConfig.setAwsAccessKey(config.getProperty("jlambda.aws.access_key_id"));
+            lambdaConfig.setAwsAccessSecret(config.getProperty("jlambda.aws.access_key_secret"));
+            lambdaConfig.setProfile(config.getProperty("jlambda.aws.profile"));
+            lambdaConfig.setHandler(config.getProperty("jlambda.aws.handler"));
+            lambdaConfig.setRegion(config.getProperty("jlambda.aws.region"));
+            lambdaConfig.setMemory(config.getProperty("jlambda.aws.mem", "512"));
             return lambdaConfig;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return new LambdaConfig();
+    }
+
+    private static InputStream getFileStream(String path, String env) throws FileNotFoundException {
+        InputStream inputStream = new FileInputStream(String.format("%s/basic-lambda/%s.properties", path, env));
+        if (inputStream == null) {
+            inputStream = new FileInputStream(String.format("%s/basic-lambda/%default.properties.properties", path));
+        }
+        return inputStream;
     }
 }
