@@ -38,6 +38,6 @@ All that is left is to add logic to your function
 
 
 ### Download
-You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.3-alpha/jlambda)
+You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.4-alpha/jlambda)
 
 P.S. Right now this is tested only in linux
