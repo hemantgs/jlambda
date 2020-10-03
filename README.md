@@ -3,6 +3,7 @@ A simple CLI for authoring AWS Lambdas in java
 
 
 ![JLambda](https://github.com/hemantgs/jlambda/workflows/Java%20CI%20with%20Gradle/badge.svg)
+![CodeQL](https://github.com/hemantgs/jlambda/workflows/CodeQL/badge.svg)
 
 ### What is jlambda
 jlambda is a simple command line tool that lets you generate java project with all AWS lambda 
