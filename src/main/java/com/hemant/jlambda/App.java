@@ -16,12 +16,15 @@
 
 package com.hemant.jlambda;
 
+import com.hemant.jlambda.events.Build;
 import com.hemant.jlambda.events.Event;
 import com.hemant.jlambda.events.Generate;
 import com.hemant.jlambda.model.LambdaConfig;
 import com.hemant.jlambda.runner.EventsRunner;
 import com.hemant.jlambda.runner.ParsedIntent;
 import com.hemant.jlambda.runner.PropertyLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import picocli.CommandLine;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
@@ -29,6 +32,8 @@ import picocli.CommandLine.Option;
 
 @Command(name = "jlambda")
 public class App implements Runnable {
+
+    private static final Logger logger = LogManager.getLogger(App.class);
 
     @Option(names = {"-h", "--help"}, usageHelp = true)
     private boolean help;
@@ -38,12 +43,13 @@ public class App implements Runnable {
 
     public static void main(String[] args) {
         int exitCode =  new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
+        logger.debug("Exiting application with the exit code: {}",exitCode);
         System.exit(exitCode);
     }
 
     @Override
     public void run() {
-
+        logger.debug("Started running application.");
         EventsRunner.build()
                     .withEnv("")
                     .withIntent(intent)

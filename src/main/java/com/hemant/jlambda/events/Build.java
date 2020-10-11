@@ -19,6 +19,8 @@ package com.hemant.jlambda.events;
 import java.io.File;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.gradle.tooling.BuildLauncher;
 import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
@@ -27,7 +29,7 @@ import org.gradle.tooling.model.GradleTask;
 
 public class Build implements Event {
     GradleConnector gradleConnector;
-//    Logger logger = LoggerFactory.getLogger(Build.class);
+    private static final Logger logger = LogManager.getLogger(Build.class);
 
     public Build(String path) {
         gradleConnector = GradleConnector.newConnector();
@@ -36,7 +38,7 @@ public class Build implements Event {
 
     @Override
     public void execute() {
-//        logger.info("Building deployment package");
+        logger.info("Building deployment package.");
         ProjectConnection connection = gradleConnector.connect();
         BuildLauncher launcher = connection.newBuild();
         GradleProject project = connection.getModel(GradleProject.class);
@@ -44,7 +46,7 @@ public class Build implements Event {
         try {
             launcher.forTasks(":buildZip").run();
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.error("Error while building deployment package.",e);
         } finally {
             connection.close();
         }

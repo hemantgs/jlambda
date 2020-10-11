@@ -17,24 +17,18 @@
 package com.hemant.jlambda.events;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import com.hemant.jlambda.model.LambdaConfig;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.progress.ProgressMonitor;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Generate implements Event {
 
     private String path;
+    private static final Logger logger = LogManager.getLogger(Generate.class);
 
     public Generate(String path) {
         this.path = path;
@@ -51,7 +45,7 @@ public class Generate implements Event {
             zipFile.extractAll(path);
             tempFile.deleteOnExit();
         } catch (ZipException | IOException e) {
-            e.printStackTrace();
+            logger.error("Error while generating lambda",e);
         }
     }
 }

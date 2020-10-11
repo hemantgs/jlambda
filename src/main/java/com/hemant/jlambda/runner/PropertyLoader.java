@@ -16,7 +16,6 @@
 
 package com.hemant.jlambda.runner;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,14 +23,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import com.hemant.jlambda.model.LambdaConfig;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.gradle.tooling.BuildLauncher;
-import org.gradle.tooling.GradleConnector;
-import org.gradle.tooling.ProjectConnection;
-import org.gradle.tooling.model.GradleProject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PropertyLoader {
+
+    private static final Logger logger = LogManager.getLogger(PropertyLoader.class);
 
     public static LambdaConfig loadProperties(String path, String env) {
         try {
@@ -49,7 +46,7 @@ public class PropertyLoader {
             lambdaConfig.setMemory(config.getProperty("jlambda.aws.mem", "512"));
             return lambdaConfig;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error while loading properties",e);
         }
         return new LambdaConfig();
     }
@@ -57,6 +54,7 @@ public class PropertyLoader {
     private static InputStream getFileStream(String path, String env) throws FileNotFoundException {
         InputStream inputStream = new FileInputStream(String.format("%s/basic-lambda/%s.properties", path, env));
         if (inputStream == null) {
+            logger.debug("Loading default properties.");
             inputStream = new FileInputStream(String.format("%s/basic-lambda/%default.properties.properties", path));
         }
         return inputStream;
