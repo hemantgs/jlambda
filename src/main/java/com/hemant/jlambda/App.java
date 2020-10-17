@@ -27,6 +27,8 @@ import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import java.io.IOException;
+
 @Command(name = "jlambda")
 public class App implements Runnable {
 
@@ -36,7 +38,12 @@ public class App implements Runnable {
     @ArgGroup(exclusive = true, multiplicity = "1")
     private ParsedIntent intent;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        if (args[1].equals(".")) {
+            String current = new java.io.File( "." ).getCanonicalPath();
+            System.out.println("Current dir:"+current);
+            args[1] = current;
+        }
         int exitCode =  new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
         System.exit(exitCode);
     }
