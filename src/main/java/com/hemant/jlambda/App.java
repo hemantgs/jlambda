@@ -39,7 +39,7 @@ public class App implements Runnable {
     private ParsedIntent intent;
 
     public static void main(String[] args) throws IOException {
-        if (args[1].equals(".")) {
+        if (args.length > 1 && args[1].equals(".")) {
             String current = new java.io.File( "." ).getCanonicalPath();
             System.out.println("Current dir:"+current);
             args[1] = current;
