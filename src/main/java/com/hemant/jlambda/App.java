@@ -39,11 +39,6 @@ public class App implements Runnable {
     private ParsedIntent intent;
 
     public static void main(String[] args) throws IOException {
-        if (args.length > 1 && args[1].equals(".")) {
-            String current = new java.io.File( "." ).getCanonicalPath();
-            System.out.println("Current dir:"+current);
-            args[1] = current;
-        }
         int exitCode =  new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
         System.exit(exitCode);
     }

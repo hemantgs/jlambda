@@ -51,17 +51,17 @@ public class EventsRunner {
 
     private Optional<Event> onGenerate() {
         if (Objects.nonNull(ParsedIntent.generate)) {
-            return Optional.of(new Generate(ParsedIntent.generate));
+            return Optional.of(new Generate(normalizePath(ParsedIntent.generate)));
         }
         return Optional.empty();
     }
 
     private Optional<Event> onBuild() {
         if (Objects.nonNull(ParsedIntent.build)) {
-            return Optional.of(new Build(ParsedIntent.build));
+            return Optional.of(new Build(normalizePath(ParsedIntent.build)));
         }
         if (Objects.nonNull(ParsedIntent.PublishEvent.publish)) {
-            return Optional.of(new Build(ParsedIntent.PublishEvent.publish));
+            return Optional.of(new Build(normalizePath(ParsedIntent.PublishEvent.publish)));
         }
         return Optional.empty();
     }
@@ -70,7 +70,7 @@ public class EventsRunner {
         if (Objects.nonNull(ParsedIntent.PublishEvent.publish)) {
             Publish.setLambdaConfig(PropertyLoader.loadProperties(ParsedIntent.PublishEvent.publish,
                     ParsedIntent.PublishEvent.env));
-            return Optional.of(new Publish(ParsedIntent.PublishEvent.publish));
+            return Optional.of(new Publish(normalizePath(ParsedIntent.PublishEvent.publish)));
         }
         return Optional.empty();
     }
@@ -92,5 +92,12 @@ public class EventsRunner {
     public EventsRunner withEnv(String env) {
         this.env = env;
         return this;
+    }
+
+    private String normalizePath(String path) {
+        if (path != null && path.equalsIgnoreCase(".")) {
+            return System.getProperty("user.dir");
+        }
+        return path;
     }
 }
