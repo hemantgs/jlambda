@@ -56,6 +56,8 @@ All that is left is to add logic to your function
  ```
 
 ### Download
-You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.4-alpha/jlambda)
+You can download the executable for
+- Linux from [https://github.com/hemantgs/jlambda/releases/download/v0.0.5-alpha/jlambda-v0.0.5-alpha-linux](https://github.com/hemantgs/jlambda/releases/download/v0.0.5-alpha/jlambda-v0.0.5-alpha-linux)
+- MacOs from [https://github.com/hemantgs/jlambda/releases/download/v0.0.5-alpha/jlambda-v0.0.5-alpha-mac](https://github.com/hemantgs/jlambda/releases/download/v0.0.5-alpha/jlambda-v0.0.5-alpha-mac)
 
 P.S. Right now this is tested only in linux
