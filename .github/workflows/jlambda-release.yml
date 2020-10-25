@@ -132,7 +132,7 @@ jobs:
         uses: actions/upload-artifact@v2-preview
         with:
           name: 'jlambda-${{env.VERSION}}-${{matrix.label}}'
-          path: 'jlambda-${{env.VERSION}}'
+          path: 'jlambda'
 
       - name: 'Release Native Image Asset'
         if: success() && contains(github.ref, 'v')
@@ -143,5 +143,5 @@ jobs:
         with:
           upload_url: ${{env.UPLOAD_URL}}
           asset_name: 'jlambda-${{env.VERSION}}-${{matrix.label}}'
-          asset_path: 'jlambda-${{env.VERSION}}'
+          asset_path: 'jlambda'
           asset_content_type: application/octet-stream
