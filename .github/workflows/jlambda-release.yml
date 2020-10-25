@@ -108,7 +108,7 @@ jobs:
           echo "::set-env name=VERSION::${GITHUB_REF#refs/*/}"
 
       - name: 'Get JAR Artifact'
-        uses: actions/downloadbuild--artifact@v2-preview
+        uses: actions/download--artifact@v2-preview
         with:
           name: 'jlambda-${{env.VERSION}}.jar'
 
