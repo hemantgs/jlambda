@@ -125,7 +125,7 @@ jobs:
 
       - name: 'Build Native Image'
         run: |
-          native-image --no-server --no-fallback -H:IncludeResources=logback.xml --allow-incomplete-classpath --initialize-at-build-time org.slf4j.LoggerFactory -jar jlambda.jar
+          native-image --no-server --no-fallback -H:IncludeResources=logback.xml --allow-incomplete-classpath --initialize-at-build-time=org.slf4j.LoggerFactory -jar jlambda.jar
 
       - name: 'Publish Native Image'
         if: success()
