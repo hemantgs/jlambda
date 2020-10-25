@@ -108,7 +108,7 @@ jobs:
           echo "::set-env name=VERSION::${GITHUB_REF#refs/*/}"
 
       - name: 'Get JAR Artifact'
-        uses: actions/download-artifact@v2-preview
+        uses: actions/downloadbuild--artifact@v2-preview
         with:
           name: 'jlambda-${{env.VERSION}}.jar'
 
@@ -125,7 +125,7 @@ jobs:
 
       - name: 'Build Native Image'
         run: |
-          native-image --no-server --no-fallback -H:IncludeResources=logback.xml --allow-incomplete-classpath ReflectionConfigurationResources -jar jlambda.jar
+          native-image --no-server --no-fallback -H:IncludeResources=logback.xml --allow-incomplete-classpath --initialize-at-build-time org.slf4j.LoggerFactory -jar jlambda.jar
 
       - name: 'Publish Native Image'
         if: success()
