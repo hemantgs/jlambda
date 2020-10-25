@@ -125,7 +125,7 @@ jobs:
 
       - name: 'Build Native Image'
         run: |
-          native-image --no-server --no-fallback -H:ReflectionConfigurationResources=reflection-config.json -H:IncludeResources=logback.xml --allow-incomplete-classpath -jar jlambda.jar
+          native-image --no-server --no-fallback -H:ReflectionConfigurationResources=reflect-config.json -H:IncludeResources=logback.xml --allow-incomplete-classpath -jar jlambda.jar
 
       - name: 'Publish Native Image'
         if: success()
