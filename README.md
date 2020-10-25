@@ -37,7 +37,23 @@ All that is left is to add logic to your function
 * `./jlambda -b /your/path` This will build the java project at the specified location into a deployment package(.zip).
 * `./jlambda -p /your/path` will build and publish the deployment package to AWS using the config given in `default.properties` . Furthermore , you con use `./jlambda -p /your/path -e <env>` to deploy using environment specific configuration.
 
-
+#### Currently Supported Properties
+```
+ jlambda.aws.name=
+ jlambda.aws.handler=
+ jlambda.aws.role=
+ jlambda.aws.profile=
+ jlambda.aws.region=
+ jlambda.aws.access_key_id=
+ jlambda.aws.access_key_secret=
+ jlambda.aws.session_token=
+ jlambda.aws.mem=
+ jlambda.aws.timeout=
+ jlambda.aws.description=
+ jlambda.aws.subnets=
+ jlambda.aws.security_groups=
+ jlambda.aws.tracing_config=
+ ```
 
 ### Download
 You can download the executable from [Releases](https://github.com/hemantgs/jlambda/releases/download/v0.0.4-alpha/jlambda)

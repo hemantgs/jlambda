@@ -18,6 +18,7 @@ package com.hemant.jlambda.events;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import com.hemant.jlambda.model.LambdaConfig;
 import com.hemant.jlambda.runner.AWSCredentialsHandler;
@@ -28,6 +29,8 @@ import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.model.CreateFunctionRequest;
 import software.amazon.awssdk.services.lambda.model.CreateFunctionResponse;
 import software.amazon.awssdk.services.lambda.model.Runtime;
+import software.amazon.awssdk.services.lambda.model.TracingConfig;
+import software.amazon.awssdk.services.lambda.model.VpcConfig;
 
 public class Publish implements Event {
 
@@ -59,11 +62,25 @@ public class Publish implements Event {
                                          .handler(lambdaConfig.getHandler())
                                          .memorySize(Integer.valueOf(lambdaConfig.getMemory()))
                                          .runtime(Runtime.JAVA11)
+                                         .timeout(Integer.valueOf(lambdaConfig.getTimeout()))
+                                         .description(lambdaConfig.getDescription())
+                                         .vpcConfig(vpcConfigBuilder(lambdaConfig))
+                                         .tracingConfig(tracingConfigBuilder(lambdaConfig))
+                                         .layers(lambdaConfig.getLayers())
                                          .role(lambdaConfig.getExecutionRole()).build();
             CreateFunctionResponse createFunctionResponse = client.createFunction(createFunctionRequest);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Consumer<TracingConfig.Builder> tracingConfigBuilder(LambdaConfig lambdaConfig) {
+        return builder -> builder.mode(lambdaConfig.getTracingConfig());
+    }
+
+    private Consumer<VpcConfig.Builder> vpcConfigBuilder(LambdaConfig lambdaConfig) {
+        return builder -> builder.subnetIds(lambdaConfig.getVpcSubnets())
+                                 .securityGroupIds(lambdaConfig.getVpcSecurityGroups());
     }
 }
 
