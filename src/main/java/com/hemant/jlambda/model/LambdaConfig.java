@@ -25,6 +25,87 @@ public class LambdaConfig {
     private String handler;
     private String region;
     private String memory;
+    private String timeout = "60";
+    private String runTimeout = "3";
+    private String description;
+    private String version;
+    private String vpcSubnets;
+    private String vpcSecurityGroups;
+    private String tracingConfig;
+    private String logRetentionDays;
+    private String layers;
+
+    public String getLayers() {
+        return layers;
+    }
+
+    public void setLayers(String layers) {
+        this.layers = layers;
+    }
+
+    public String getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(String timeout) {
+        this.timeout = timeout;
+    }
+
+    public String getRunTimeout() {
+        return runTimeout;
+    }
+
+    public void setRunTimeout(String runTimeout) {
+        this.runTimeout = runTimeout;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getVpcSubnets() {
+        return vpcSubnets;
+    }
+
+    public void setVpcSubnets(String vpcSubnets) {
+        this.vpcSubnets = vpcSubnets;
+    }
+
+    public String getVpcSecurityGroups() {
+        return vpcSecurityGroups;
+    }
+
+    public void setVpcSecurityGroups(String vpcSecurityGroups) {
+        this.vpcSecurityGroups = vpcSecurityGroups;
+    }
+
+    public String getTracingConfig() {
+        return tracingConfig;
+    }
+
+    public void setTracingConfig(String tracingConfig) {
+        this.tracingConfig = tracingConfig;
+    }
+
+    public String getLogRetentionDays() {
+        return logRetentionDays;
+    }
+
+    public void setLogRetentionDays(String logRetentionDays) {
+        this.logRetentionDays = logRetentionDays;
+    }
 
     public String getMemory() {
         return memory;
