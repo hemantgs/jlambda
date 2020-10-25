@@ -47,6 +47,11 @@ public class PropertyLoader {
             lambdaConfig.setHandler(config.getProperty("jlambda.aws.handler"));
             lambdaConfig.setRegion(config.getProperty("jlambda.aws.region"));
             lambdaConfig.setMemory(config.getProperty("jlambda.aws.mem", "512"));
+            lambdaConfig.setTracingConfig(config.getProperty("jlambda.aws.tracing_config"));
+            lambdaConfig.setVpcSecurityGroups(config.getProperty("jlambda.aws.security_groups"));
+            lambdaConfig.setVpcSubnets(config.getProperty("lambda.aws.subnets"));
+            lambdaConfig.setDescription(config.getProperty("jlambda.aws.description"));
+            lambdaConfig.setTimeout(config.getProperty("jlambda.aws.timeout"));
             return lambdaConfig;
         } catch (IOException e) {
             e.printStackTrace();
