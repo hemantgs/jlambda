@@ -22,8 +22,8 @@ import java.io.IOException;
 import com.hemant.jlambda.model.LambdaConfig;
 import com.hemant.jlambda.runner.AWSCredentialsHandler;
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.model.CreateFunctionRequest;
@@ -36,7 +36,7 @@ public class Publish implements Event {
     private static LambdaConfig lambdaConfig;
     private static LambdaClient client;
 
-    private static final Logger logger = LogManager.getLogger(Publish.class);
+    private static final Logger logger = LoggerFactory.getLogger(Publish.class);
 
     public Publish(String pathToZip) {
         this.pathToZip = String.format("%s/basic-lambda/build/distributions/basic-lambda.zip", pathToZip);

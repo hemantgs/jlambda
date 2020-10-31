@@ -23,12 +23,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import com.hemant.jlambda.model.LambdaConfig;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PropertyLoader {
 
-    private static final Logger logger = LogManager.getLogger(PropertyLoader.class);
+    private static final Logger logger = LoggerFactory.getLogger(PropertyLoader.class);
 
     public static LambdaConfig loadProperties(String path, String env) {
         try {

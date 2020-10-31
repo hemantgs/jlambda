@@ -12,8 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class AppTest {
     App app;
     CommandLine commandLine;
@@ -32,6 +30,11 @@ class AppTest {
 
     @Test
     void shouldDisplayCorrectHelp() {
+        app = new App("-h");
+        commandLine = new CommandLine(app);
+        commandLine.setOut(new PrintWriter(stringWriter));
+        commandLine.setErr(new PrintWriter(errWriter));
+
         int code = commandLine.execute("-h");
         assertThat(code).isNotNegative();
         assertThat(stringWriter.toString()).contains("Usage: jlambda [-h] (-g=<path to generate lambda> | -b=<path to build package\n" +

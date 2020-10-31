@@ -19,17 +19,17 @@ package com.hemant.jlambda.events;
 import java.io.File;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.gradle.tooling.BuildLauncher;
 import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.gradle.tooling.model.GradleProject;
 import org.gradle.tooling.model.GradleTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Build implements Event {
     GradleConnector gradleConnector;
-    private static final Logger logger = LogManager.getLogger(Build.class);
+    private static final Logger logger = LoggerFactory.getLogger(Build.class);
 
     public Build(String path) {
         gradleConnector = GradleConnector.newConnector();

@@ -22,13 +22,13 @@ import java.io.InputStream;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Generate implements Event {
 
     private String path;
-    private static final Logger logger = LogManager.getLogger(Generate.class);
+    private static final Logger logger = LoggerFactory.getLogger(Generate.class);
 
     public Generate(String path) {
         this.path = path;
