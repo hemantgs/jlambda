@@ -16,12 +16,10 @@
 
 package com.hemant.jlambda;
 
-import com.hemant.jlambda.events.Event;
-import com.hemant.jlambda.events.Generate;
-import com.hemant.jlambda.model.LambdaConfig;
 import com.hemant.jlambda.runner.EventsRunner;
 import com.hemant.jlambda.runner.ParsedIntent;
-import com.hemant.jlambda.runner.PropertyLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
@@ -30,6 +28,13 @@ import picocli.CommandLine.Option;
 @Command(name = "jlambda")
 public class App implements Runnable {
 
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private final String[] args;
+
+    public App(String... args) {
+        this.args = args;
+    }
+
     @Option(names = {"-h", "--help"}, usageHelp = true)
     private boolean help;
 
@@ -37,13 +42,17 @@ public class App implements Runnable {
     private ParsedIntent intent;
 
     public static void main(String[] args) {
-        int exitCode =  new CommandLine(new App()).setCaseInsensitiveEnumValuesAllowed(true).execute(args);
+        int exitCode =  new CommandLine(new App(args))
+                .setCaseInsensitiveEnumValuesAllowed(true)
+                .execute(args);
+
+        logger.debug("Exiting application with the exit code: {}",exitCode);
         System.exit(exitCode);
     }
 
     @Override
     public void run() {
-
+        logger.debug("Started running the command with parameters: {}", (Object) args);
         EventsRunner.build()
                     .withEnv("")
                     .withIntent(intent)

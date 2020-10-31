@@ -24,10 +24,12 @@ import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.gradle.tooling.model.GradleProject;
 import org.gradle.tooling.model.GradleTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Build implements Event {
     GradleConnector gradleConnector;
-//    Logger logger = LoggerFactory.getLogger(Build.class);
+    private static final Logger logger = LoggerFactory.getLogger(Build.class);
 
     public Build(String path) {
         gradleConnector = GradleConnector.newConnector();
@@ -36,7 +38,7 @@ public class Build implements Event {
 
     @Override
     public void execute() {
-//        logger.info("Building deployment package");
+        logger.info("Building deployment package.");
         ProjectConnection connection = gradleConnector.connect();
         BuildLauncher launcher = connection.newBuild();
         GradleProject project = connection.getModel(GradleProject.class);
@@ -44,7 +46,7 @@ public class Build implements Event {
         try {
             launcher.forTasks(":buildZip").run();
         } catch (Throwable e) {
-            e.printStackTrace();
+            logger.error("Error while building deployment package.",e);
         } finally {
             connection.close();
         }
